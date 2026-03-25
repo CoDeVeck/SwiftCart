@@ -1,13 +1,11 @@
 package com.swiftCart.auth_service.services;
 
-import com.swiftCart.auth_service.dto.request.RegistrarUsuarioRequest;
+import com.swiftCart.auth_service.dto.request.RegistrarRequest;
 import com.swiftCart.auth_service.dto.response.ResultadoResponse;
 import com.swiftCart.auth_service.models.Cargo;
 import com.swiftCart.auth_service.models.Distrito;
 import com.swiftCart.auth_service.models.Rol;
 import com.swiftCart.auth_service.models.Usuario;
-import com.swiftCart.auth_service.repositories.ICargoRepository;
-import com.swiftCart.auth_service.repositories.IDistritoRepository;
 import com.swiftCart.auth_service.repositories.IUsuarioRepository;
 import com.swiftCart.auth_service.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +29,7 @@ public class UsuarioService {
         return usuarioRepository.findByCorreo(correo);
     }
 
-    public ResultadoResponse<Usuario> registrarUsuario(RegistrarUsuarioRequest registrarUsuarioRequest) {
+    public ResultadoResponse<Usuario> registrarUsuario(RegistrarRequest registrarUsuarioRequest) {
 
         if (usuarioRepository.findByCorreo(registrarUsuarioRequest.getCorreo()).isPresent()) {
             log.error("Error al registrar el correo {} ya esta en la BD", registrarUsuarioRequest.getCorreo());
@@ -56,7 +54,7 @@ public class UsuarioService {
 
     }
 
-    private Usuario registerUserMap(RegistrarUsuarioRequest request){
+    private Usuario registerUserMap(RegistrarRequest request){
         Usuario usuario = new Usuario();
 
         Rol rolDefault = new Rol();
@@ -74,6 +72,7 @@ public class UsuarioService {
         usuario.setCorreo(request.getCorreo());
         usuario.setClave(bCryptPasswordEncoder.encode(request.getClave()));
         usuario.setTipoDoc(request.getTipoDoc());
+        usuario.setNroDoc(request.getNroDoc());
         usuario.setDireccion(request.getDireccion());
         usuario.setDistrito(distritoSeleccionado);
         usuario.setTelefono(request.getTelefono());

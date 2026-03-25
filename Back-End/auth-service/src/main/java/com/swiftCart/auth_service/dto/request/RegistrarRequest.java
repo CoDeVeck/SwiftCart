@@ -1,7 +1,6 @@
 package com.swiftCart.auth_service.dto.request;
 
 import com.swiftCart.auth_service.enums.TipoDocumento;
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegistrarUsuarioRequest {
+public class RegistrarRequest {
 
     private String nombres;
     private String apePaterno;
