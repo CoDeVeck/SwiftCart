@@ -1,0 +1,52 @@
+info:
+  name: Actualizar_Usuario
+  type: http
+  seq: 5
+
+http:
+  method: PUT
+  url: http://localhost:8081/v1/usuario/update/3120f587-6aef-4448-8369-725c9ec15cfc
+  body:
+    type: multipart-form
+    data:
+      - name: uuid
+        type: text
+        value: 3120f587-6aef-4448-8369-725c9ec15cfc
+      - name: nombres
+        type: text
+        value: CAMBIADP
+      - name: apePaterno
+        type: text
+        value: CAMBIADO
+      - name: apeMaterno
+        type: text
+        value: cambiado
+      - name: correo
+        type: text
+        value: cambiado123@gmail.com
+      - name: tipoDoc
+        type: text
+        value: DNI
+      - name: nroDoc
+        type: text
+        value: "19090101"
+      - name: direccion
+        type: text
+        value: ASDA
+      - name: idDistrito
+        type: text
+        value: "1"
+      - name: telefono
+        type: text
+        value: ""
+      - name: imagenMultipart
+        type: file
+        value:
+          - C:\Users\User\Pictures\2.jpg
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

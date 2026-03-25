@@ -2,6 +2,8 @@ package com.swiftCart.auth_service.controllers;
 
 import com.swiftCart.auth_service.dto.request.RegistrarEmpleadoRequest;
 import com.swiftCart.auth_service.dto.request.RegistrarRequest;
+import com.swiftCart.auth_service.dto.request.UpdateProfileRequest;
+import com.swiftCart.auth_service.dto.response.ProfileResponse;
 import com.swiftCart.auth_service.dto.response.ResultadoResponse;
 import com.swiftCart.auth_service.dto.response.UsuarioResponse;
 import com.swiftCart.auth_service.services.CloudinaryService;
@@ -12,10 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -45,6 +46,26 @@ public class UsuarioController {
             return ResponseEntity.status(500)
                     .body(ResultadoResponse.error("Error registrando usuario: " + e.getMessage()));
 
+        }
+    }
+
+    @PutMapping(value = "/update/{uuid}", consumes = {"multipart/form-data"})
+    public ResponseEntity<ResultadoResponse<?>> update(
+            @ModelAttribute UpdateProfileRequest request
+    ) {
+        try {
+            ResultadoResponse<ProfileResponse> response =
+                    usuarioService.actualizarPerfil(request);
+
+            if (response.isValor()) {
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500)
+                    .body(ResultadoResponse.error("Error al acutalizar al cliente"));
         }
     }
 }
