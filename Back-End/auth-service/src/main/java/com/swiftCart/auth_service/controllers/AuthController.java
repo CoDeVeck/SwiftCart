@@ -3,6 +3,7 @@ package com.swiftCart.auth_service.controllers;
 import com.swiftCart.auth_service.dto.request.LoginRequest;
 import com.swiftCart.auth_service.dto.request.RegistrarRequest;
 import com.swiftCart.auth_service.dto.response.ResultadoResponse;
+import com.swiftCart.auth_service.dto.response.UsuarioResponse;
 import com.swiftCart.auth_service.models.Usuario;
 import com.swiftCart.auth_service.services.CloudinaryService;
 import com.swiftCart.auth_service.services.UsuarioService;
@@ -35,7 +36,6 @@ public class AuthController {
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final CloudinaryService cloudinaryService;
 
 
     @PostMapping("/login")
@@ -64,9 +64,9 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?>register(@RequestBody RegistrarRequest request){
         try {
-            ResultadoResponse<Usuario> registrado = usuarioService.registrarUsuario(request);
+            ResultadoResponse<UsuarioResponse> registrado = usuarioService.registrarUsuario(request);
 
-            if (!registrado.isValor()){
+            if (registrado.isValor()){
                 log.info("Se registro al usuario {} exitosamente. ", registrado);
                 return ResponseEntity.status(HttpStatus.CREATED).body(registrado);
             }else{
@@ -79,4 +79,7 @@ public class AuthController {
                     .body(ResultadoResponse.error("Error registrando usuario: " + e.getMessage()));
         }
     }
+
+
+
 }
