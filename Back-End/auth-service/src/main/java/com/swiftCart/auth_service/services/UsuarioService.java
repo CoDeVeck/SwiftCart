@@ -37,7 +37,6 @@ public class UsuarioService {
     private final IDistritoRepository distritoRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final CloudinaryService cloudinaryService;
-    private final JwtUtil jwtUtil;
 
     public Optional<Usuario> obtenerDatos(String correo) {
         return usuarioRepository.findByCorreo(correo);
@@ -211,6 +210,13 @@ public class UsuarioService {
         profileResponse.setImagen(usuari.getImagen());
         return profileResponse;
 
+    }
+
+    public ResultadoResponse<ProfileResponse> obtenerPerfil(UUID uuid){
+        Usuario usuario = obtenerUsuarioPorUuid(uuid);
+        ProfileResponse response = responseProfile(usuario);
+
+        return ResultadoResponse.success("Se obtuvo los datos. ", response);
     }
 
     private void validarUsuario(String correo, String telefono, String nroDoc) {
