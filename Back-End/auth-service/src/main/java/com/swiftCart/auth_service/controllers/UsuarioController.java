@@ -9,6 +9,7 @@ import com.swiftCart.auth_service.dto.response.UsuarioResponse;
 import com.swiftCart.auth_service.services.CloudinaryService;
 import com.swiftCart.auth_service.services.UsuarioService;
 import com.swiftCart.auth_service.util.JwtUtil;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -68,4 +70,22 @@ public class UsuarioController {
                     .body(ResultadoResponse.error("Error al acutalizar al cliente"));
         }
     }
+
+    @GetMapping("/profile/{uuid}")
+    public ResponseEntity<ResultadoResponse<?>> perfil(@PathVariable UUID uuid){
+        try {
+
+            ResultadoResponse<ProfileResponse> response = usuarioService.obtenerPerfil(uuid);
+
+            if (response.isValor()){
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            }else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+        }catch (Exception e){
+            return ResponseEntity.status(500)
+                    .body(ResultadoResponse.error("Error al obtener los datos"));
+        }
+    }
+
 }
