@@ -26,7 +26,7 @@ public class Usuario {
     @Column(name = "ID_USUARIO")
     private Integer idUsuario;
 
-    @Column(name="UUID",nullable = false,updatable = false)
+    @Column(name="UUID",updatable = false)
     private UUID uuid;
 
     @Column(name = "NOMBRES")

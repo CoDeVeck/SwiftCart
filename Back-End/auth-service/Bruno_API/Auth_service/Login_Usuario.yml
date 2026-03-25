@@ -1,0 +1,22 @@
+info:
+  name: Login_Usuario
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8081/v1/auth/login
+  body:
+    type: json
+    data: |-
+      {
+        "correo":"admin1@mail.com",
+        "clave":"clave123"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
