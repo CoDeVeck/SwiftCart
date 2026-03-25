@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -66,6 +67,7 @@ public class UsuarioService {
         Cargo cargo = new Cargo();
         cargo.setIdCargo(request.getIdCargo());
 
+        usuario.setUuid(generateUUID());
         usuario.setNombres(request.getNombres());
         usuario.setApePaterno(request.getApePaterno());
         usuario.setApeMaterno(request.getApeMaterno());
@@ -81,5 +83,9 @@ public class UsuarioService {
         usuario.setFechaRegistro(LocalDateTime.now());
 
         return usuario;
+    }
+
+    private UUID generateUUID(){
+        return UUID.randomUUID();
     }
 }
