@@ -17,9 +17,10 @@ public class JwtUtil {
 
     private final Key key = Keys.hmacShaKeyFor("SK_443ff638f8a74ba659cdb8336bfb5f91".getBytes());
 
-    public String generateToken(String username, List<String> roles){
+    public String generateToken(String username, List<String> roles,String cargo){
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", roles);
+        claims.put("cargo",cargo);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)

@@ -5,6 +5,7 @@ import com.swiftCart.auth_service.dto.request.RegistrarRequest;
 import com.swiftCart.auth_service.dto.response.ResultadoResponse;
 import com.swiftCart.auth_service.dto.response.UsuarioResponse;
 import com.swiftCart.auth_service.models.Usuario;
+import com.swiftCart.auth_service.repositories.IUsuarioRepository;
 import com.swiftCart.auth_service.services.CloudinaryService;
 import com.swiftCart.auth_service.services.UsuarioService;
 import com.swiftCart.auth_service.util.JwtUtil;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 public class AuthController {
 
     private final UsuarioService usuarioService;
+    private final IUsuarioRepository usuarioRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
@@ -51,7 +53,13 @@ public class AuthController {
                     GrantedAuthority::getAuthority
             ).collect(Collectors.toList());
 
-            String token = jwtUtil.generateToken(request.getCorreo(), roles);
+            Usuario usuario_cargo = usuarioRepository.findByCorreo(request.getCorreo())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            String cargo = usuario_cargo.getCargo() != null
+                    ? usuario_cargo.getCargo().getDescripcion()
+                    : null;
+
+            String token = jwtUtil.generateToken(request.getCorreo(), roles,cargo);
             log.info("Se genero el token: {} satisfactoriamente", token);
             return ResponseEntity.ok(Map.of("token",token));
 
