@@ -211,11 +211,18 @@ public class UsuarioService {
         if (usuari.getDistrito() != null) {
             profileResponse.setNombreDistrito(usuari.getDistrito().getNombre());
         }
-        ResultadoResponse<EmpresaFeign> empresaFeign = empresaFeignClient.obtenerEmpresa(usuari.getIdEmpresa());
-        var empresaData = empresaFeign.getData();
+        profileResponse.setIdEmpresa(null);
+        profileResponse.setNombreEmpresa(null);
 
-        profileResponse.setIdEmpresa(empresaData.getIdEmpresa());
-        profileResponse.setNombreEmpresa(empresaData.getRazoSocial());
+        if (usuari.getIdEmpresa() != null){
+            ResultadoResponse<EmpresaFeign> empresaFeign = empresaFeignClient.obtenerEmpresa(usuari.getIdEmpresa());
+            var empresaData = empresaFeign.getData();
+            profileResponse.setIdEmpresa(empresaData.getIdEmpresa());
+            profileResponse.setNombreEmpresa(empresaData.getRazoSocial());
+        }
+
+
+
         profileResponse.setTelefono(usuari.getTelefono());
         profileResponse.setImagen(usuari.getImagen());
         return profileResponse;
