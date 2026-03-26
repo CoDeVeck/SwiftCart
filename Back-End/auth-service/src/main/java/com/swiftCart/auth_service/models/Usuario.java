@@ -69,6 +69,9 @@ public class Usuario {
     @JoinColumn(name = "ID_CARGO")
     private Cargo cargo;
 
+    @Column(name = "ID_EMPRESA")
+    private Integer idEmpresa;
+
     @Column(name = "FECHA_REGISTRO")
     private LocalDateTime fechaRegistro;
 
