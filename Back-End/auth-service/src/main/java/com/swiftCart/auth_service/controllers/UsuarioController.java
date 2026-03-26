@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.UUID;
 
-@Slf4j
 @RestController
 @RequestMapping("/v1/usuario")
 @RequiredArgsConstructor
@@ -37,10 +36,8 @@ public class UsuarioController {
             ResultadoResponse<UsuarioResponse> registrado = usuarioService.registrarEmpleado(request);
 
             if (registrado.isValor()) {
-                log.info("Se registro al usuario {} exitosamente. ", registrado);
                 return ResponseEntity.status(HttpStatus.CREATED).body(registrado);
             } else {
-                log.error("No se pudo registrar al usuario {} error!. ", request);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(registrado);
             }
 

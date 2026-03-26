@@ -6,6 +6,8 @@ import com.swiftCart.auth_service.dto.request.UpdateProfileRequest;
 import com.swiftCart.auth_service.dto.response.ProfileResponse;
 import com.swiftCart.auth_service.dto.response.ResultadoResponse;
 import com.swiftCart.auth_service.dto.response.UsuarioResponse;
+import com.swiftCart.auth_service.feign.dto.EmpresaFeign;
+import com.swiftCart.auth_service.feign.repo.EmpresaFeignClient;
 import com.swiftCart.auth_service.models.Cargo;
 import com.swiftCart.auth_service.models.Distrito;
 import com.swiftCart.auth_service.models.Rol;
@@ -37,6 +39,7 @@ public class UsuarioService {
     private final IDistritoRepository distritoRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final CloudinaryService cloudinaryService;
+    private final EmpresaFeignClient empresaFeignClient;
 
     public Optional<Usuario> obtenerDatos(String correo) {
         return usuarioRepository.findByCorreo(correo);
@@ -81,6 +84,7 @@ public class UsuarioService {
         usuario.setNroDoc(request.getNroDoc());
         usuario.setDireccion(request.getDireccion());
         usuario.setDistrito(distritoSeleccionado);
+        usuario.setIdEmpresa(null);
         usuario.setTelefono(request.getTelefono());
         usuario.setRol(rolDefault);
         usuario.setCargo(null);
@@ -120,6 +124,7 @@ public class UsuarioService {
         usuario.setNroDoc(request.getNroDoc());
         usuario.setDireccion(request.getDireccion());
         usuario.setDistrito(distritoSeleccionado);
+        usuario.setIdEmpresa(request.getIdEmpresa());
         usuario.setTelefono(request.getTelefono());
         usuario.setRol(rolDefault);
         usuario.setCargo(cargo);
@@ -206,6 +211,11 @@ public class UsuarioService {
         if (usuari.getDistrito() != null) {
             profileResponse.setNombreDistrito(usuari.getDistrito().getNombre());
         }
+        ResultadoResponse<EmpresaFeign> empresaFeign = empresaFeignClient.obtenerEmpresa(usuari.getIdEmpresa());
+        var empresaData = empresaFeign.getData();
+
+        profileResponse.setIdEmpresa(empresaData.getIdEmpresa());
+        profileResponse.setNombreEmpresa(empresaData.getRazoSocial());
         profileResponse.setTelefono(usuari.getTelefono());
         profileResponse.setImagen(usuari.getImagen());
         return profileResponse;

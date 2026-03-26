@@ -1,28 +1,24 @@
-package com.swiftCart.auth_service.dto.response;
+package com.swiftCart.catalogo_service.feign.dto;
 
-import com.swiftCart.auth_service.enums.TipoDocumento;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileResponse {
+@Data
+public class UsuarioFeign {
 
     private UUID uuid;
     private String nombres;
     private String apePaterno;
     private String apeMaterno;
     private String correo;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "TIPO_DOC")
-    private TipoDocumento tipoDoc;
+    private String tipoDoc;
     private String nroDoc;
     private String direccion;
     private String nombreDistrito;
@@ -30,5 +26,4 @@ public class ProfileResponse {
     private String nombreEmpresa;
     private String telefono;
     private String imagen;
-
 }

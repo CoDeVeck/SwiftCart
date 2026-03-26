@@ -11,20 +11,20 @@ http:
     data: |-
       {
         "nombres":"SubGerente",
-        "apePaterno":"Su4Gerente",
-        "apeMaterno":"Su4Gerente",
-        "correo":"sub5@gmail.com",
+        "apePaterno":"Su5Gerente",
+        "apeMaterno":"Su5Gerente",
+        "correo":"sub1@gmail.com",
         "clave":"clave123",
         "tipoDoc":"DNI",
-        "nroDoc":"19150101",
+        "nroDoc":"19110101",
         "direccion":"casa",
         "idDistrito":"1",
-        "telefono":"198110190",
+        "telefono":"118110190",
         "idCargo":"2"
       }
   auth:
     type: bearer
-    token: eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FkbWluaXN0cmFkb3IiXSwic3ViIjoiYWRtaW4xQG1haWwuY29tIiwiaWF0IjoxNzc0NDY1NDk3LCJleHAiOjE3NzQ1MDE0OTd9.Uh52yVONKesx-O7Dn81YJgjbYTit2KGlEvHRv0gYXdk
+    token: eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FkbWluaXN0cmFkb3IiXSwiY2FyZ28iOiJHZXJlbnRlIiwic3ViIjoiYWRtaW4xQG1haWwuY29tIiwiaWF0IjoxNzc0NDkxODIxLCJleHAiOjE3NzQ1Mjc4MjF9.E7OK1JjG8GNTf2-PvDedyat7wnHhuUG-XZAzW2C1fnY
 
 settings:
   encodeUrl: true

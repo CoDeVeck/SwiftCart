@@ -1,0 +1,25 @@
+info:
+  name: Crear_Categoria
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8082/v1/catalogo/categoria
+  body:
+    type: multipart-form
+    data:
+      - name: descripcion
+        type: text
+        value: Utiles
+      - name: multipartFile
+        type: file
+        value:
+          - C:\Users\User\Pictures\Chavitoo.png
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -21,6 +21,7 @@ public class RegistrarEmpleadoRequest {
     private String nroDoc;
     private String direccion;
     private Integer idDistrito;
+    private Integer idEmpresa;
     private String telefono;
     private Integer idCargo;
 }
