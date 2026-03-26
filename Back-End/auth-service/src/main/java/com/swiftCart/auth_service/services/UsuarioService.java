@@ -1,22 +1,13 @@
 package com.swiftCart.auth_service.services;
 
-import com.swiftCart.auth_service.dto.request.RegistrarEmpleadoRequest;
-import com.swiftCart.auth_service.dto.request.RegistrarRequest;
-import com.swiftCart.auth_service.dto.request.UpdateProfileRequest;
-import com.swiftCart.auth_service.dto.response.ProfileResponse;
-import com.swiftCart.auth_service.dto.response.ResultadoResponse;
-import com.swiftCart.auth_service.dto.response.UsuarioResponse;
+import com.swiftCart.auth_service.dto.request.*;
+import com.swiftCart.auth_service.dto.response.*;
 import com.swiftCart.auth_service.feign.dto.EmpresaFeign;
 import com.swiftCart.auth_service.feign.repo.EmpresaFeignClient;
-import com.swiftCart.auth_service.models.Cargo;
-import com.swiftCart.auth_service.models.Distrito;
-import com.swiftCart.auth_service.models.Rol;
-import com.swiftCart.auth_service.models.Usuario;
-import com.swiftCart.auth_service.repositories.ICargoRepository;
-import com.swiftCart.auth_service.repositories.IDistritoRepository;
-import com.swiftCart.auth_service.repositories.IRolRepository;
-import com.swiftCart.auth_service.repositories.IUsuarioRepository;
-import com.swiftCart.auth_service.util.JwtUtil;
+import com.swiftCart.auth_service.kafka.event.UsarioProducer;
+import com.swiftCart.auth_service.kafka.event.UsuarioEvent;
+import com.swiftCart.auth_service.models.*;
+import com.swiftCart.auth_service.repositories.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,6 +31,9 @@ public class UsuarioService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final CloudinaryService cloudinaryService;
     private final EmpresaFeignClient empresaFeignClient;
+
+    //inyecto el usuario producer para maandarlo a Kafka
+    private final UsarioProducer usarioProducer;
 
     public Optional<Usuario> obtenerDatos(String correo) {
         return usuarioRepository.findByCorreo(correo);
@@ -98,8 +92,27 @@ public class UsuarioService {
     ) {
         validarUsuario(request.getCorreo(), request.getTelefono(), request.getNroDoc());
         Usuario usuarioNuevo = registerEmpleadoMap(request);
-
         usuarioRepository.save(usuarioNuevo);
+
+        Usuario datosCompletos = obtenerUsuarioPorUuid(usuarioNuevo.getUuid());
+        UsuarioKafkaDto dto = new UsuarioKafkaDto(
+                datosCompletos.getIdUsuario(),
+                usuarioNuevo.getNombres(),
+                usuarioNuevo.getApePaterno(),
+                usuarioNuevo.getCorreo()
+        );
+
+        //Mandamos a Kafka
+        UsuarioEvent usuarioEvent = new UsuarioEvent(
+                "Usuario esta en estado pendiente",
+                "PENDIENTE",
+                dto
+        );
+
+
+        usarioProducer.sendMessages(usuarioEvent);
+        log.info("Se mando a KAFKA el ususario {} esperando al microservicio correspondiente", usarioProducer);
+
         UsuarioResponse response = usuarioDTO(usuarioNuevo);
 
         return ResultadoResponse.success("Se registro al usuario", response);
