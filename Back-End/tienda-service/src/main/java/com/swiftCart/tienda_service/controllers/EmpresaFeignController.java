@@ -25,7 +25,7 @@ public class EmpresaFeignController {
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerEmpresa(@PathVariable Integer id){
         try {
-            Empresa empresa = empresaService.obtenerEmpresaPorId(id);
+            ResultadoResponse<Empresa> empresa = empresaService.obtenerEmpresaPorId(id);
 
             return ResponseEntity.ok(empresa);
         } catch (Exception e) {

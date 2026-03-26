@@ -26,6 +26,7 @@ public class ProfileResponse {
     private String nroDoc;
     private String direccion;
     private String nombreDistrito;
+    private Integer idEmpresa;
     private String nombreEmpresa;
     private String telefono;
     private String imagen;

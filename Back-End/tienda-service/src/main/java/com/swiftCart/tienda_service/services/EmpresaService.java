@@ -1,6 +1,7 @@
 package com.swiftCart.tienda_service.services;
 
 
+import com.swiftCart.tienda_service.dto.response.ResultadoResponse;
 import com.swiftCart.tienda_service.models.Empresa;
 import com.swiftCart.tienda_service.repositories.IEmpresaRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,10 @@ public class EmpresaService {
         return empresaRepository.findAll();
     }
 
-    public Empresa obtenerEmpresaPorId(Integer id ){
-        return empresaRepository.findById(id)
+    public ResultadoResponse<Empresa> obtenerEmpresaPorId(Integer id ){
+
+        Empresa empresa = empresaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontro la empresa"));
+        return ResultadoResponse.success("Se obtuvo la empresa. ", empresa);
     }
 }

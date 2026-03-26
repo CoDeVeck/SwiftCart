@@ -11,15 +11,16 @@ http:
     data: |-
       {
         "nombres":"SubGerente",
-        "apePaterno":"Su5Gerente",
-        "apeMaterno":"Su5Gerente",
-        "correo":"sub6@gmail.com",
+        "apePaterno":"Su8Gerente",
+        "apeMaterno":"Su8Gerente",
+        "correo":"su78@gmail.com",
         "clave":"clave123",
         "tipoDoc":"DNI",
-        "nroDoc":"19160101",
+        "nroDoc":"19161801",
         "direccion":"casa",
         "idDistrito":"1",
-        "telefono":"198610190",
+        "idEmpresa":"1",
+        "telefono":"191610890",
         "idCargo":"2"
       }
   auth: inherit

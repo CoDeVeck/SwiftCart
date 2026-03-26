@@ -43,6 +43,9 @@ http:
         type: file
         value:
           - C:\Users\User\Pictures\2.jpg
+      - name: ""
+        type: text
+        value: ""
   auth: inherit
 
 settings:
