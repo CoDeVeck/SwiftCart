@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -53,13 +54,18 @@ public class AuthController {
                     GrantedAuthority::getAuthority
             ).collect(Collectors.toList());
 
-            Usuario usuario_cargo = usuarioRepository.findByCorreo(request.getCorreo())
+            Usuario usuario = usuarioRepository.findByCorreo(request.getCorreo())
                     .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-            String cargo = usuario_cargo.getCargo() != null
-                    ? usuario_cargo.getCargo().getDescripcion()
+
+            String cargo = usuario.getCargo() != null
+                    ? usuario.getCargo().getDescripcion()
                     : null;
 
-            String token = jwtUtil.generateToken(request.getCorreo(), roles,cargo);
+            UUID uuid = usuario.getUuid() != null
+                    ? usuario.getUuid()
+                    : null;
+
+            String token = jwtUtil.generateToken(request.getCorreo(), roles,cargo,uuid);
             log.info("Se genero el token: {} satisfactoriamente", token);
             return ResponseEntity.ok(Map.of("token",token));
 
