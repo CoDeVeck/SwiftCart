@@ -1,0 +1,37 @@
+info:
+  name: Registrar_Sucursal
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: http://localhost:8086/v1/tienda/new
+  body:
+    type: multipart-form
+    data:
+      - name: nombreUbicacion
+        type: text
+        value: Primavera
+      - name: idEmpresa
+        type: text
+        value: "1"
+      - name: idDistrito
+        type: text
+        value: "1"
+      - name: direccion
+        type: text
+        value: Av. Lima
+      - name: fechaApertura
+        type: text
+        value: 2025-12-12
+      - name: multipartFile
+        type: file
+        value:
+          - C:\Users\User\Pictures\2.jpg
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
