@@ -10,17 +10,17 @@ http:
     type: json
     data: |-
       {
-        "nombres":"SubGerente",
-        "apePaterno":"Su8Gerente",
-        "apeMaterno":"Su8Gerente",
-        "correo":"su78@gmail.com",
+        "nombres":"Enrqiue",
+        "apePaterno":"Manraque",
+        "apeMaterno":"lope",
+        "correo":"sub01@gmail.com",
         "clave":"clave123",
         "tipoDoc":"DNI",
-        "nroDoc":"19161801",
+        "nroDoc":"19191901",
         "direccion":"casa",
         "idDistrito":"1",
         "idEmpresa":"1",
-        "telefono":"191610890",
+        "telefono":"190610199",
         "idCargo":"2"
       }
   auth: inherit
