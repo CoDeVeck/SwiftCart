@@ -69,17 +69,17 @@ public class UsuarioController {
     }
 
     @GetMapping("/profile/{uuid}")
-    public ResponseEntity<ResultadoResponse<?>> perfil(@PathVariable UUID uuid){
+    public ResponseEntity<ResultadoResponse<?>> perfil(@PathVariable UUID uuid) {
         try {
 
             ResultadoResponse<ProfileResponse> response = usuarioService.obtenerPerfil(uuid);
 
-            if (response.isValor()){
+            if (response.isValor()) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
-            }else {
+            } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(500)
                     .body(ResultadoResponse.error("Error al obtener los datos"));
         }
